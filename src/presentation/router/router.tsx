@@ -1,5 +1,5 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
-import { ChatPage } from "../pages/chat/ChatPage"
+// import { ChatPage } from "../pages/chat/ChatPage"
 import { AssistantPage } from "../pages/assistant/AssistantPage";
 // import { AudioToTextPage } from "../pages/audio-to-text/AudioToTextPage";
 // import { ImageTunningPage } from "../pages/image-generation/ImageTunningPage";
@@ -10,15 +10,23 @@ import { AssistantPage } from "../pages/assistant/AssistantPage";
 // import { ProsConsPage } from "../pages/pros-cons/ProsConsPage";
 // import { OrthographyPage } from "../pages/orthography/OrthographyPage";
 import { DashboardLayout } from "../layouts/DashboardLayout";
+import { OrthographyPage } from "../pages/orthograpy/OrthographyPage";
 
 export const menuRoutes = [
-    {
-      to: "/chat",
-      icon: "fa-brands fa-rocketchat",
-      title: "Chat",
-      description: "Espacio para el progreso y la excelencia",
-      component: <ChatPage />
-    },
+  {
+    to: "/orthography",
+    icon: "fa-solid fa-spell-check",
+    title: "Ortografía",
+    description: "Corregir ortografía",
+    component: <OrthographyPage />
+  },
+    // {
+    //   to: "/chat",
+    //   icon: "fa-brands fa-rocketchat",
+    //   title: "Chat",
+    //   description: "Espacio para el progreso y la excelencia",
+    //   component: <ChatPage />
+    // },
     // {
     //   to: "/pros-cons",
     //   icon: "fa-solid fa-code-compare",
