@@ -2,11 +2,15 @@ import { useState } from "react"
 import { GptMessages } from "../../components/chat-bubbles/GptMessages";
 import { MyMessage } from "../../components/chat-bubbles/MyMessage";
 import { TypingLoader } from "../../components/loaders/TypingLoader";
-import { TextMessageBox } from "../../components";
+import { GptChatMessages, TextMessageBox } from "../../components";
+import { ChatUseCase } from "../../../core/use-cases";
 
 interface Message {
   text: string;
   isGpt: boolean;
+  // info?: {
+  //   message: string;
+  // }
 }
 export const ChatPage = () => {
 
@@ -16,12 +20,17 @@ export const ChatPage = () => {
   const handlePost = async(text: string) => {
     setIsLoading(true)
     setMessages((prev) => [...prev, {text: text, isGpt: false}])
-
-    //TODO: UseCase
-
-    setIsLoading(false)
-
+    
+    const {ok, respuesta} = await ChatUseCase(text)
+    if (!ok) {
+      setMessages((prev) => [...prev, {text: 'No se pudo obtener resultado', isGpt: true}])
+    } else {
+      setMessages((prev) => [...prev, {text: respuesta, isGpt: true}])
+    }
+    console.log(respuesta)
+    
     //TODO: Añadir el mensaje de isGpt a true
+    setIsLoading(false)
   }
 
   return (
@@ -36,7 +45,10 @@ export const ChatPage = () => {
             messages.map((message, index) =>(
               message.isGpt
                 ? (
-                  <GptMessages key={index} text="Esto es de OpenAI"/>
+                  <GptChatMessages
+                    key={index}
+                    respuesta={message.text}
+                  />
                 )
                 : (
                   <MyMessage key={index} text={message.text} />
